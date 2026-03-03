@@ -15,6 +15,7 @@ import {
   getTrashWard,
   deleteWard,
   restoreWard,
+  forceDeleteWard,
 } from "../../api/wards";
 
 import { useFocusEffect } from "@react-navigation/native";
@@ -73,6 +74,16 @@ const Wards = () => {
     fetchData();
   };
 
+  //Force delete
+  const handlePermanentDelete = async (id: string) => {
+    try {
+      await forceDeleteWard(id);
+      fetchData();
+    } catch (error) {
+      console.log("Permanent Delete Error:", error);
+    }
+  };
+
   const renderItem = ({ item, index }: any) => {
     return (
       <View style={styles.row}>
@@ -105,42 +116,75 @@ const Wards = () => {
           </Text>
         </View>
 
-        <View style={styles.actions}>
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate("WardDetails", {
-                ward: item,
-              })
-            }
-          >
-            <Ionicons
-              name="eye-outline"
-              size={20}
-              color="#555"
-            />
-          </TouchableOpacity>
+       <View style={styles.actions}>
+          {showDeleted ? (
+            <>
+              {/* Restore */}
+              <TouchableOpacity
+                onPress={() => handleRestore(item.id)}
+              >
+                <Ionicons
+                  name="refresh-outline"
+                  size={20}
+                  color="green"
+                />
+              </TouchableOpacity>
 
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate("EditWard", {
-                ward: item,
-              })
-            }
-          >
-            <Ionicons
-              name="create-outline"
-              size={20}
-              color="#007bff"
-            />
-          </TouchableOpacity>
+              {/* Permanent Delete */}
+              <TouchableOpacity
+                onPress={() => handlePermanentDelete(item.id)} 
+              >
+                <Ionicons
+                  name="trash-outline"
+                  size={20}
+                  color="red"
+                />
+              </TouchableOpacity>
+            </>
+          ) : (
+            <>
+              {/* View */}
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate("WardDetails", {
+                    ward: item,
+                  })
+                }
+              >
+                <Ionicons
+                  name="eye-outline"
+                  size={20}
+                  color="#555"
+                />
+              </TouchableOpacity>
 
-          <TouchableOpacity>
-            <Ionicons
-              name="trash-outline"
-              size={20}
-              color="red"
-            />
-          </TouchableOpacity>
+              {/* Edit */}
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate("EditWard", {
+                    ward: item,
+                  })
+                }
+              >
+                <Ionicons
+                  name="create-outline"
+                  size={20}
+                  color="#007bff"
+                />
+              </TouchableOpacity>
+
+              {/* Soft Delete */}
+              <TouchableOpacity
+                onPress={() => handleSoftDelete(item.id)}
+              >
+                <Ionicons
+                  name="trash-outline"
+                  size={20}
+                  color="red"
+                />
+              </TouchableOpacity>
+            </>
+          )}
         </View>
       </View>
     );
@@ -299,7 +343,8 @@ const styles = StyleSheet.create({
   actions: {
     flex: 1.5,
     flexDirection: "row",
-    justifyContent: "space-evenly",
+    justifyContent: "space-around",
+    alignItems: "center",
   },
   statusBadge: {
     width: 80,

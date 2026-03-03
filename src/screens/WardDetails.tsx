@@ -20,19 +20,10 @@ export default function WardDetails() {
     );
   }
 
-  const handleDelete = () => {
-    Alert.alert("Delete Ward", "Are you sure?", [
-      { text: "Cancel", style: "cancel" },
-      {
-        text: "Delete",
-        style: "destructive",
-        onPress: () => navigation.goBack(),
-      },
-    ]);
-  };
+  
 
   return (
-    <Block flex={1} padding={sizes.m}>
+    <Block padding={sizes.m}>
       <Text h4 marginBottom={sizes.l}>
         {ward.ward_name}
       </Text>
@@ -62,19 +53,9 @@ export default function WardDetails() {
       </Block>
 
       <Block marginTop={sizes.l}>
-        <Button
-          gradient={gradients.primary}
-          marginBottom={sizes.sm}
-          onPress={() =>
-            navigation.navigate("EditWard", { ward })
-          }
-        >
-          <Text white semibold>Edit Ward</Text>
-        </Button>
+       
 
-        <Button color={colors.danger} onPress={handleDelete}>
-          <Text white semibold>Delete Ward</Text>
-        </Button>
+       
       </Block>
     </Block>
   );

@@ -3,6 +3,7 @@ import { Alert, TextInput, Switch } from "react-native";
 import { useRoute, useNavigation } from "@react-navigation/native";
 import { Block, Text, Button } from "../components";
 import { useTheme } from "../hooks";
+import { updateWard } from "../../api/wards";
 
 export default function EditWard() {
   const { sizes, colors, gradients } = useTheme();
@@ -30,23 +31,29 @@ export default function EditWard() {
   );
   const [status, setStatus] = useState(ward.status ?? true);
 
-  const handleUpdate = () => {
-    if (!wardName) {
-      Alert.alert("Validation", "Ward name is required");
-      return;
-    }
+  const handleUpdate = async () => {
+  if (!wardName) {
+    Alert.alert("Validation", "Ward name is required");
+    return;
+  }
 
-    console.log("Updated Ward:", {
-      wardName,
-      wardType,
-      floorNumber,
-      totalBeds,
-      status,
+  try {
+    await updateWard(ward.id, {
+      ward_name: wardName,
+      ward_type: wardType,
+      floor_number: floorNumber ? Number(floorNumber) : null,
+      total_beds: totalBeds ? Number(totalBeds) : null,
+      status: status,
     });
 
     Alert.alert("Success", "Ward updated successfully");
-    navigation.goBack();
-  };
+
+    navigation.navigate("Wards"); // 🔥 important
+  } catch (error) {
+    console.log("Update Ward Error:", error);
+    Alert.alert("Error", "Failed to update ward");
+  }
+};
 
   return (
     <Block flex={1} padding={sizes.m}>

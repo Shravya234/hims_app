@@ -34,39 +34,16 @@ export async function getTrashWard() {
 // CREATE WARD
 // ===============================
 export async function createWard(data: any) {
-  try {
-    const response = await apiClient.post(
-      endpoint.wards,
-      data
-    );
-    return response.data;
-  } catch (error: any) {
-    console.error("Create Ward Error:", error);
-    throw new Error(
-      error.response?.data?.message || "Network error"
-    );
-  }
+  const response = await apiClient.post("/wards", data);
+  return response.data;
 }
 
 // ===============================
 // UPDATE WARD
 // ===============================
-export async function updateWard(
-  id: string,
-  data: any
-) {
-  try {
-    const response = await apiClient.put(
-      endpoint.wardById(id),
-      data
-    );
-    return response.data;
-  } catch (error: any) {
-    console.error("Update Ward Error:", error);
-    throw new Error(
-      error.response?.data?.message || "Network error"
-    );
-  }
+export async function updateWard(id: string, data: any) {
+  const response = await apiClient.put(`/wards/${id}`, data);
+  return response.data;
 }
 
 // ===============================
@@ -97,6 +74,23 @@ export async function restoreWard(id: string) {
     return response.data;
   } catch (error: any) {
     console.error("Restore Ward Error:", error);
+    throw new Error(
+      error.response?.data?.message || "Network error"
+    );
+  }
+}
+
+// ===============================
+// FORCE DELETE WARD
+// ===============================
+export async function forceDeleteWard(id: string) {
+  try {
+    const response = await apiClient.delete(
+      `/wards/${id}/force-delete`
+    );
+    return response.data;
+  } catch (error: any) {
+    console.error("Force Delete Error:", error);
     throw new Error(
       error.response?.data?.message || "Network error"
     );
