@@ -334,10 +334,10 @@ const styles = StyleSheet.create({
   },
   sl: { flex: 0.5 },
   name: { flex: 1.5 },
-  type: { flex: 1 },
+  type: { flex: 1.2 },
   floor: { flex: 1 },
   statusContainer: {
-    flex: 1.2,
+    flex: 1,
     alignItems: "center",
   },
   actions: {
@@ -347,12 +347,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   statusBadge: {
-    width: 80,
+    width: 60,
     textAlign: "center",
     paddingVertical: 5,
     borderRadius: 20,
     color: "#fff",
-    fontSize: 12,
+    fontSize: 12,    
   },
   active: {
     backgroundColor: "#28a745",

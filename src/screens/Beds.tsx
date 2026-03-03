@@ -138,9 +138,7 @@ const Beds = () => {
         {item.room_number || "-"}
       </Text>
 
-      <Text style={[styles.cell, styles.type]}>
-        {item.bed_type || "-"}
-      </Text>
+      
 
       <View style={styles.statusContainer}>
         <Text
@@ -224,8 +222,7 @@ const Beds = () => {
         <Text style={[styles.headerCell, styles.code]}>BED</Text>
         <Text style={[styles.headerCell, styles.ward]}>WARD</Text>
         <Text style={[styles.headerCell, styles.room]}>ROOM</Text>
-        <Text style={[styles.headerCell, styles.type]}>TYPE</Text>
-        <Text style={[styles.headerCell, styles.statusContainer]}>
+        <Text style={[styles.headerCell, { flex: 1 }]}>
           STATUS
         </Text>
         <Text style={[styles.headerCell, styles.actions]}>ACTIONS</Text>
@@ -292,14 +289,14 @@ const styles = StyleSheet.create({
 
   sl: { flex: 0.5 },
   code: { flex: 1 },
-  ward: { flex: 1.2 },
-  room: { flex: 1 },
+  ward: { flex: 1 },
+  room: { flex: 0.9 },
   type: { flex: 1 },
 
-  statusContainer: { flex: 1.3, alignItems: "center" },
+  statusContainer: { flex: 1, alignItems: "center" },
 
   actions: {
-    flex: 1.5,
+    flex: 1.2,
     flexDirection: "row",
     justifyContent: "space-evenly",
   },

@@ -79,23 +79,7 @@ export default function BedDetails() {
       </Block>
 
       <Block marginTop={sizes.l}>
-        <Button
-          gradient={gradients.primary}
-          marginBottom={sizes.sm}
-          onPress={() =>
-            navigation.navigate("EditBed", { bed })
-          }
-        >
-          <Text white semibold>
-            Edit Bed
-          </Text>
-        </Button>
-
-        <Button color={colors.danger} onPress={handleDelete}>
-          <Text white semibold>
-            Delete Bed
-          </Text>
-        </Button>
+       
       </Block>
     </Block>
   );
